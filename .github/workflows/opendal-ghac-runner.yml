@@ -40,7 +40,7 @@ permissions:
 
 jobs:
   ghac:
-    uses: apache/opendal/.github/workflows/service_test_ghac.yml@main
+    uses: apache/opendal/.github/workflows/service_test_ghac.yml@ghac-ci
     with:
       opendal_repository: ${{ inputs.opendal_repository }}
       opendal_ref: ${{ inputs.opendal_ref }}
