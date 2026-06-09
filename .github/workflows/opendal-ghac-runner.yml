@@ -1,0 +1,47 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+name: OpenDAL GHAC Runner
+run-name: opendal-ghac-${{ inputs.correlation_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      opendal_repository:
+        description: "OpenDAL repository to checkout"
+        required: true
+        type: string
+      opendal_ref:
+        description: "OpenDAL ref to test"
+        required: true
+        type: string
+      correlation_id:
+        description: "Identifier used by OpenDAL CI to find this run"
+        required: true
+        type: string
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  ghac:
+    uses: apache/opendal/.github/workflows/service_test_ghac.yml@main
+    with:
+      opendal_repository: ${{ inputs.opendal_repository }}
+      opendal_ref: ${{ inputs.opendal_ref }}
+      correlation_id: ${{ inputs.correlation_id }}
