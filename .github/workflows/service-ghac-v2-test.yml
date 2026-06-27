@@ -15,22 +15,18 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: OpenDAL GHAC Runner
-run-name: opendal-ghac-${{ inputs.correlation_id }}
+name: OpenDAL GHAC v2 Test
+run-name: opendal-service-ghac-v2-test
 
 on:
   workflow_dispatch:
     inputs:
-      opendal_repository:
+      repository:
         description: "OpenDAL repository to checkout"
         required: true
         type: string
-      opendal_ref:
+      ref:
         description: "OpenDAL ref to test"
-        required: true
-        type: string
-      correlation_id:
-        description: "Identifier used by OpenDAL CI to find this run"
         required: true
         type: string
 
@@ -39,9 +35,17 @@ permissions:
   contents: read
 
 jobs:
-  ghac:
-    uses: apache/opendal/.github/workflows/service_test_ghac.yml@main
-    with:
-      opendal_repository: ${{ inputs.opendal_repository }}
-      opendal_ref: ${{ inputs.opendal_ref }}
-      correlation_id: ${{ inputs.correlation_id }}
+  ghac_v2:
+    name: ghac v2
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.opendal_repository }}
+          ref: ${{ inputs.opendal_ref }}
+
+      - name: Run service ghac test
+        uses: ./github/actions/test_service_ghac_v2
