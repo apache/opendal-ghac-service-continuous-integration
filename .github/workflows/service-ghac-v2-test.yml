@@ -19,33 +19,28 @@ name: OpenDAL GHAC v2 Test
 run-name: opendal-service-ghac-v2-test
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      repository:
-        description: "OpenDAL repository to checkout"
-        required: true
-        type: string
       ref:
         description: "OpenDAL ref to test"
         required: true
         type: string
 
 permissions:
-  actions: write
   contents: read
 
 jobs:
   ghac_v2:
-    name: ghac v2
     runs-on: ubuntu-latest
     permissions:
-      actions: write
       contents: read
     steps:
       - uses: actions/checkout@v6
         with:
-          repository: ${{ inputs.opendal_repository }}
-          ref: ${{ inputs.opendal_ref }}
+          repository: apache/opendal
+          ref: ${{ inputs.ref }}
 
       - name: Run service ghac test
         uses: ./github/actions/test_service_ghac_v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
