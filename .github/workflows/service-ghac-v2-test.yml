@@ -41,6 +41,6 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: Run service ghac test
-        uses: ./github/actions/test_service_ghac_v2
+        uses: ./.github/actions/test_service_ghac_v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
