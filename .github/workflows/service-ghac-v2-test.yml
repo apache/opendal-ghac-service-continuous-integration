@@ -21,7 +21,7 @@ run-name: opendal-service-ghac-v2-test
 on:
   workflow_call:
     inputs:
-      ref:
+      opendal_ref:
         description: "OpenDAL ref to test"
         required: true
         type: string
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: apache/opendal
-          ref: ${{ inputs.ref }}
+          ref: ${{ inputs.opendal_ref }}
 
       - name: Run service ghac test
         uses: ./.github/actions/test_service_ghac_v2
